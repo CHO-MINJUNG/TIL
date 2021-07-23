@@ -19,6 +19,17 @@
   const number = parseInt(prompt("몇 명이 참가하나요?"),10);
   alert(number);
   const yesOrNo = confirm("맞나요?");  
+  //자바스크립트 값이 아니라 태그를 선택한 것이라는 표시를 위해(저자의 기준)
+  //여러개 선택하려면 document.querySelectorAll('~')하면 된다 -> 배열인 척 하는 객체(유사배열)
+  //class로 식별하려면 (.btn), id로 식별하려면 (#btn)
+  //const $input = document.querySelector('input'); querySelector는 tag를 선택하는 함수
+
+  document.querySelector('input').addEventListener('input', function(){
+
+  });
+  document.querySelector('button').addEventListener('click', function(){
+
+  });
 </script>
 </body>
 </html>
