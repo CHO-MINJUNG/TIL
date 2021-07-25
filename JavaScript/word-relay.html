@@ -14,22 +14,38 @@
 <div>제시어: <span id="word"></span></div>
 <input type="text">
 <button>입력</button>
-//여기에 JAVASCRIPT를 넣는 것!
+
 <script>
-  const number = parseInt(prompt("몇 명이 참가하나요?"),10);
-  alert(number);
+  const number = parseInt(prompt("몇 명이 참가하나요?"));
+  const $button = document.querySelector('button');
+  const $input = document.querySelector('input');
+  const $word = document.querySelector('#word');
+
+  let word; //제시어
+  letnewWord; //새로 입력한 단어
+
+
+  const onClickButton = () => {
+    if(!word){
+      //빈 경우
+      word = newWord;
+      $word.textContent = word;
+      $input.value = '';
+    } else{
+      //비어 있지 않은 경우
+    }
+  };
+  const onInput = (event) => {
+    newWord = event.target.value;
+  };
   const yesOrNo = confirm("맞나요?");  
   //자바스크립트 값이 아니라 태그를 선택한 것이라는 표시를 위해(저자의 기준)
   //여러개 선택하려면 document.querySelectorAll('~')하면 된다 -> 배열인 척 하는 객체(유사배열)
   //class로 식별하려면 (.btn), id로 식별하려면 (#btn)
   //const $input = document.querySelector('input'); querySelector는 tag를 선택하는 함수
 
-  document.querySelector('input').addEventListener('input', function(){
-
-  });
-  document.querySelector('button').addEventListener('click', function(){
-
-  });
+  $button.addEventListener('click', onClickButton);
+  $input.addEventListener('input', onInput);
 </script>
 </body>
 </html>
