@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>쿵쿵따 게임</div>
+  <div>제시어: <span id="word"></span></div>
+  <input type="text">
+  <button id="btn"></button>
+<script>
+  const $word = document.querySelector('#word');
+  const $input = document.querySelector('input');
+  const $button = document.querySelector('#btn');
+
+  let word;
+  let newWord;
+
+  const onClickButton = () =>{
+    if((!word || word[2]===newWord[0])&&(newWord.length==3)){
+      word=newWord;
+      $word.textContent= word;
+      $input.value='';
+    }else{
+      alert('틀렸습니다')
+    }
+    };
+
+  const onInput = (event) =>{
+    newWord = event.target.value;
+  };
+
+  $button.addEventListener('click', onClickButton);
+  $input.addEventListener('input', onInput);
+
+</script>
+    
+</body>
+</html>
