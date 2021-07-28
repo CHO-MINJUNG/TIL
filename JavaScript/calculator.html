@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>계산기</title>
+  <style>
+    *{box-sizing: border-box;}
+    #result{width: 180px; height: 50px; margin: 5px; text-align: right;}
+    #operator {width: 50px; height: 50px; margin: 5px; text-align: center;}
+    button {width: 50px; height: 50px; margin: 5px;}
+  </style>
+</head>
+<body>
+  <input readonly id="operator">
+  <input readonly type="number" id="result">
+  <div class="row">
+    <button id="num-7">7</button>
+    <button id="num-8">8</button>
+    <button id="num-9">9</button>
+    <button id="plus">+</button>
+  </div>
+  <div class="row">
+    <button id="num-4">4</button>
+    <button id="num-5">5</button>
+    <button id="num-6">6</button>
+    <button id="minus">-</button>
+  </div>
+  <div class="row">
+    <button id="num-1">1</button>
+    <button id="num-2">2</button>
+    <button id="num-3">3</button>
+    <button id="divide">/</button>
+  </div>
+  <div class="row">
+    <button id="clear">C</button>
+    <button id="num-0">0</button>
+    <button id="calculate">=</button>
+    <button id="multiply">x</button>
+  </div>
+
+  <script>
+    let numOne = '';
+    let operator = '';
+    let numTwo = '';
+    const $operator = document.querySelector('#operator');
+    const $result = document.querySelector('#result');
+
+    //여기서 event.target은 querSelector로 선택된 놈을 의미한다
+    const onClickNumber = (event) => {
+        if(operator){
+          if(!numTwo){
+            $result.value = '';
+          }
+        numTwo += event.target.textContent;
+        }else{
+          numOne += event.target.textContent;
+        }
+        $result.value += event.target.textContent;
+    };
+
+    //addEventListener에 원래는 함수 이름만 적어야 하지만 안에서 함수를 호출해 버렸다
+    //따라서 호출된 함수에 return에 코드를 적어줘야하며 {return 은 생략 가능하기 때문에 해준다
+    //함수가 함수를 return한다 부르며 이것은 고차 함수(high order function이라 부른다)
+    document.querySelector('#num-0').addEventListener('click', onClickNumber);
+    document.querySelector('#num-1').addEventListener('click', onClickNumber);
+    document.querySelector('#num-2').addEventListener('click', onClickNumber);
+    document.querySelector('#num-3').addEventListener('click', onClickNumber);
+    document.querySelector('#num-4').addEventListener('click', onClickNumber);
+    document.querySelector('#num-5').addEventListener('click', onClickNumber);
+    document.querySelector('#num-6').addEventListener('click', onClickNumber);
+    document.querySelector('#num-7').addEventListener('click', onClickNumber);
+    document.querySelector('#num-8').addEventListener('click', onClickNumber);
+    document.querySelector('#num-9').addEventListener('click', onClickNumber);
+
+    const onClickOperator = (event) => {
+      if(numOne){
+        operator = event.target.textContent;
+        $operator.value = operator;
+      } else{
+        alert('숫자를 먼저 입력하세요.')
+      }
+    }
+    document.querySelector('#plus').addEventListener('click', onClickOperator);
+    document.querySelector('#minus').addEventListener('click', onClickOperator);
+    document.querySelector('#divide').addEventListener('click', onClickOperator);
+    document.querySelector('#multiply').addEventListener('click', onClickOperator);
+    document.querySelector('#calculate').addEventListener('click',);
+    document.querySelector('#clear').addEventListener('click',);
+  </script>
+</body>
+</html>
