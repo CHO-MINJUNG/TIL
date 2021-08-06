@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>숫자 야구</title>
+</head>
+<body>
+<form id="form">
+  <input type="text" id="input">
+  <button>확인</button>
+</form>  
+<div id="logs"></div>
+<script>
+  const $input = document.querySelector('#input');
+  const $form = document.querySelector('#form');
+  const $logs = document.querySelector('#logs');
+
+  const numbers = [];
+  for(let n=0; n<9; n+=1){
+    numbers.push(n+1);
+  }
+  const answer = [];
+  for(let n=0; n<4; n+=1){
+    const index = Math.floor(Math.random()*(9-n));
+    answer.push(numbers[index]);
+    numbers.splice(index, 1);
+  }
+
+  
+</script>
+</body>
+</html>
