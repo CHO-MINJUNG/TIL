@@ -28,6 +28,45 @@
   const IMG_URL = './rsp.png';
   $computer.style.background = `url(${IMG_URL}) 0 0`;
   $computer.style.backgroundSize = 'auto 200px';
+
+  const rspX = {
+    scissors:'0', //가위
+    rock: '-220px', //바위
+    paper: '-440px' //보
+  };
+
+  let computerChoice = 'scissors';
+  const changeComputerHand = () => {
+    //background와 backgroundSize는 항상 같이 적어줘야함(backgroundSize가 리셋되기 때문)
+    if(computerChoice===rspX.scissors){ //가위
+      computerChoice='rock';
+    } else if (computerChoice === rspX.rock){ //바위
+      computerChoice = 'paper'; 
+    }else if(computerChoice ===rspX.paper ){ //보
+      computerChoice = 'scissors';
+    }
+    $computer.style.background=`url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+    $computer.style.backgroundSize='auto 200px';
+  }
+  //setInterval 함수는 반환값이 존재함. 이 반환값을 사용해 나중에 타이머를 제거할 수 있음
+  //또 타이머는 타이머마다 각각의 id를 가진다. 임의의 타이머는 고유한 id를 가진다
+  let intervalId = setInterval(changeComputerHand,50);
+
+  const clickButton =()=>{
+    clearInterval(intervalId);
+    //점수 계산 및 화면 표시
+
+    //이 버튼을 계속 클릭하면 setTimeout이 여러번 실행되기 때문에 속도가 너무 빨라지는 버그가 생긴다
+    //setTimeout이 1초로 설정되어 있으므로 최소한 1초 후에 클릭해야 문제 없다
+    //but 1초안에 클릭한다면 문제 발생!
+    setTimeout(()=>{
+      intervalId = setInterval(changeComputerHand,50);
+    },1000);
+  };
+  $rock.addEventListener('click',clickButton);
+  $scissors.addEventListener('click',clickButton);
+  $paper.addEventListener('click',clickButton);
+  
 </script>
 </body>
 </html>
