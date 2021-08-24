@@ -51,17 +51,49 @@
   //setInterval 함수는 반환값이 존재함. 이 반환값을 사용해 나중에 타이머를 제거할 수 있음
   //또 타이머는 타이머마다 각각의 id를 가진다. 임의의 타이머는 고유한 id를 가진다
   let intervalId = setInterval(changeComputerHand,50);
-
+  const scoreTable = {
+    rock: 0,
+    scissors:1,
+    paper:-1
+  };
+  let clickable = true;
   const clickButton =()=>{
-    clearInterval(intervalId);
-    //점수 계산 및 화면 표시
+    if (clickable){
+      clearInterval(intervalId);
+      clickable=false;
+      //점수 계산 및 화면 표시
 
-    //이 버튼을 계속 클릭하면 setTimeout이 여러번 실행되기 때문에 속도가 너무 빨라지는 버그가 생긴다
-    //setTimeout이 1초로 설정되어 있으므로 최소한 1초 후에 클릭해야 문제 없다
-    //but 1초안에 클릭한다면 문제 발생!
-    setTimeout(()=>{
-      intervalId = setInterval(changeComputerHand,50);
-    },1000);
+      const myChoice = event.target.textContent === '바위'
+        ? 'rock'
+        : event.target.textContent === '가위'
+          ? 'scissors'
+          : 'paper';
+
+      // diff === '고양이' || diff ==='사자' || diff === '강아지'
+      //  => ['고양이', '사자', '강아지'].includes(diff) 이렇게 바꿔쓰면 더 효율적! {ture, false}
+      const myScore = scoreTable[myChoice];
+      const computerScore = scoreTable[computerChoice];
+      const diff = myScore - computerScore;
+
+      // 2,-1은 승리조건이고, -2, 1은 패배조건
+      if ([2,-1].includes(diff)){
+        console.log('승리');
+      } else if ([-2,1].includes(diff)){
+        console.log('패배');
+      } else{
+        console.log('무승부');
+      }
+      //이 버튼을 계속 클릭하면 setTimeout이 여러번 실행되기 때문에 속도가 너무 빨라지는 버그가 생긴다
+      //setTimeout이 1초로 설정되어 있으므로 최소한 1초 후에 클릭해야 문제 없다
+      //but 1초안에 클릭한다면 문제 발생!
+      setTimeout(()=>{
+        clickable = true;
+        //버그의 문제로 clear한번 더 해주기
+        //혹은 removeEventListener를 이용해 1초동안 다른 버튼들이 클릭이 안 되도록 막아서 버그를 방지하는 방식도 있다
+        //혹은 TF 변수를 추가해서 버그 방지 가능
+        intervalId = setInterval(changeComputerHand,50);
+      },1000);
+    }
   };
   $rock.addEventListener('click',clickButton);
   $scissors.addEventListener('click',clickButton);
