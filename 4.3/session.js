@@ -24,6 +24,7 @@ http.createServer(async (req, res) => {
     const { name } = qs.parse(query);
     const expires = new Date();
     expires.setMinutes(expires.getMinutes() + 5);
+    // 고유한 key값
     const uniqueInt = Date.now();
     session[uniqueInt] = {
       name,
@@ -35,6 +36,7 @@ http.createServer(async (req, res) => {
     });
     res.end();
   // 세션쿠키가 존재하고, 만료 기간이 지나지 않았다면
+  // 애초에 쿠키 유효기간이 만료되면 브라우저가 세션을 보내주지 않았겠지만 노파심에 한번더
   } else if (cookies.session && session[cookies.session].expires > new Date()) {
     res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end(`${session[cookies.session].name}님 안녕하세요`);
