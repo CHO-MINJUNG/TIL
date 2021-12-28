@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// 팔로워 팔로잉 구분
 router.use((req, res, next)=>{
     res.locals.user=null;
     res.locals.followerCount=0;

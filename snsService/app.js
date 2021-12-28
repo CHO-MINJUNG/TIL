@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
+const passport = require('passport');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
@@ -9,6 +10,8 @@ const dotenv = require('dotenv');
 // dotenv는 require하고 최대한 위에!
 dotenv.config();
 const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth')
+const { sequelize } = require('./models');
 
 const app = express();
 // 개발과 배포의 포트를 다른 것을 사용하기 위해
@@ -19,6 +22,13 @@ nunjucks.configure('views', {
   express: app,
   watch: true,
 });
+sequelize.sync({force: false})
+    .then(() => {
+        console.log('데이터베이스 연결 성공');
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,8 +44,12 @@ app.use(session({
     secure: false,
   },
 }));
+// session을 받아서 처리하므로 express session보다 아래에 있어야 함
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', pageRouter);
+app.use('/auth', authRouter)
 
 // 404처리 미들웨어
 app.use((req, res, next) => {
