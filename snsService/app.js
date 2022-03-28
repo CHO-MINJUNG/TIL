@@ -6,6 +6,7 @@ const passport = require('passport');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+const passportConfig = require('./passport');
 
 // dotenv는 require하고 최대한 위에!
 dotenv.config();
@@ -30,6 +31,8 @@ sequelize.sync({force: false})
         console.error(err);
     });
 
+passportConfig();
+
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -46,7 +49,10 @@ app.use(session({
 }));
 // session을 받아서 처리하므로 express session보다 아래에 있어야 함
 app.use(passport.initialize());
+// 세션 값을 주면 id 값을 알아냄
+// 로그인 후에 그 다음 요청부터 passport session이 수행될 때 deserialize가 실행됨
 app.use(passport.session());
+
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter)
